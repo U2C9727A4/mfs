@@ -18,8 +18,7 @@ data is the data that will be used with the operation.
   
 ## Transport  
 MFS uses TCP as its transport protocol, for data gurantees.  
-However, it uses TCP with a timer. What does this mean? Allow me to explain.  
-When a request arrives, a timer starts counting down 10 seconds. If it finishes, the connection is killed. Sending another operation during this time window, resets the timer and keeps the connectiona live for longer. However, a connection cannot live longer than 1 minute, in order to reduce risks of a single client preventing others from using the device  
+Any transport that can provide data integrity and data order gurantees can be used, but TCP is the preferred transport.  
   
 ## Operation codes  
 0: no operation. Self explanatory.  
