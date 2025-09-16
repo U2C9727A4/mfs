@@ -24,21 +24,22 @@ Any transport that can provide data integrity and data order gurantees can be us
 0: no operation. Self explanatory.  
 1: read. Reads data from the path provided by the message, When the server gets this it should send a message to the requester with data being the contents of the file at path.  
 2: write. Writes data of the message to the file at path, Response data should contain the bytes written as a unsigned 32-bit integer (much like dsize).  
-3: ls. sends the file paths the server has to the client, akin to POSIX ls. During response, the data field contains all the paths the server has, with newlines between the paths. Path is empty!  
+3: ls. sends the file paths the server has to the client, akin to POSIX ls. During response, the data field contains all the paths the server has, with newlines between the paths. Path is empty! (This inherently disallows '\n' in file names and paths.)  
   
 4: setup. this is a special operation only allowed in the SETUP mode. When the server recieves this in SETUP mode, It should set up it WiFi.  
    The path is treated as the SSID of the WiFi, and data is the password of it, after this is recieved, MFS exits setup mode.  
      
   
 ### Response Operation Codes  
-Response operation codes are simply the operation ORed with `1000000`.  
+Response operation codes are simply the operation ORed with `0x80`.  
 the write operation in binary form is `00000010`, for the server to send a response of a write operation, it would send `10000010` as the operation.  
   
 5: error. data field is the error code (codes are listed below). This can only be sent by the server, and not the client.  
 (For clarification, the 5 of the error operation is to be ORed with 10000000, which makes it 10000101 in operation)   
   
 ### Error codes  
-Error codes are unsigned 16-bit integers, and must be in the data field with dsize=2.  
+Error codes are unsigned 16-bit integers, and must be in the data field with dsize=2.
+(The numbers are in decimal.)  
 000: File not Found  
 001: Operation failed unexpectedly  
   
@@ -49,7 +50,7 @@ Error codes are unsigned 16-bit integers, and must be in the data field with dsi
 010: Timer expired  
   
 ## Responses  
-Responses are messages with the operand being ORed with 10000000.  
+Responses are messages with the operand being ORed with 0x80.  
 Response echo back the file they operated on, for example a read operation's response would have the file it read in the path field, and the contents of the file in the data field.  
   
 ## Operation modes  
@@ -68,8 +69,8 @@ Lets say a client wants to write "127" into the PWM node of a PWM capable-pin, 6
   
 After the request, The server responds with the bytes written.  
   
------------------------------------------------------------------------------------------------  
-|          Path size (11)        |           Data size (1)       | Operand|    Path     | Data|  
------------------------------------------------------------------------------------------------  
-|00000000000000000000000000001011|0000000000000000000000000000001|10000010|"/gpio/6/pwm"| "3" |  
------------------------------------------------------------------------------------------------  
+---------------------------------------------------------------------------------------------------------------------------  
+|          Path size (11)        |           Data size (1)       | Operand|    Path     |              Data               |  
+---------------------------------------------------------------------------------------------------------------------------  
+|00000000000000000000000000001011|0000000000000000000000000000001|10000010|"/gpio/6/pwm"| 0000000000000000000000000000011 |  
+---------------------------------------------------------------------------------------------------------------------------  
