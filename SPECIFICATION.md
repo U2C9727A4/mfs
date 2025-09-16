@@ -23,7 +23,7 @@ Any transport that can gurantee integirty, sequentiality and a stream can be use
 Decimal ranges between 0 to 30 is reserved for the MFS spec. Implementations are free to implement non-standard operations beyond it.  
 Unused operations within the MFS spec range are to be treated as a no-op.  
 
-0: no operation. Self explanatory.  
+0: no operation. Self explanatory. Server responds with a no-op response aswell (0x80)  
 1: read. Reads data from the path provided by the message, When the server gets this it should send a message to the requester with data being the contents of the file at path.  
 2: write. Writes data of the message to the file at path, Response data should contain the bytes written as a unsigned 32-bit integer (much like dsize).  
 3: ls. sends the file paths the server has to the client, akin to POSIX ls. During response, the data field contains all the paths the server has, with '\0's between the paths.  
