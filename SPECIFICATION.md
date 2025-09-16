@@ -45,8 +45,8 @@ values ranging from 1000 to 1999 are file errors:
   1001: Illegal data  
   1002: Writing data failed.  
   1003: Reading data failed.  
-  1004: Writing is not allowed on this file.
-  1005: Readig is not allowed on this file.
+  1004: Writing is not allowed on this file.  
+  1005: Reading is not allowed on this file.  
 
 values ranging from 2000 to 2999 are transport errors:  
   2000: Sycnhronisation failure. (Sent when the server and/or client detects they are de-synchronised)  
