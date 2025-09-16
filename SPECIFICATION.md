@@ -18,7 +18,8 @@ data is the data that will be used with the operation.
   
 ## Transport  
 MFS uses TCP as its transport protocol, for data gurantees.  
-Any transport that can provide data integrity and data order gurantees can be used, but TCP is the preferred transport.  
+Any transport that can gurantee integirty, sequentiality and a stream can be used, but TCP is the preferred transport.  
+(As extra clarification, the transport should ALWAYS be a byte-stream like TCP is.)  
   
 ## Operation codes  
 0: no operation. Self explanatory.  
