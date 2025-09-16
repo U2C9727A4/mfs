@@ -45,6 +45,8 @@ values ranging from 1000 to 1999 are file errors:
   1001: Illegal data  
   1002: Writing data failed.  
   1003: Reading data failed.  
+  1004: Writing is not allowed on this file.
+  1005: Readig is not allowed on this file.
 
 values ranging from 2000 to 2999 are transport errors:  
   2000: Sycnhronisation failure. (Sent when the server and/or client detects they are de-synchronised)  
@@ -57,7 +59,31 @@ values ranging from 3000 to 4999 are client errors:
 ## Responses  
 Responses are messages with the operand being ORed with 0x80.  
 Response echo back the file they operated on, for example a read operation's response would have the file it read in the path field, and the contents of the file in the data field.  
-  
+
+## VFS hierarchy
+/  
++ gpio/ (Contains GPIO pins)  
+|   + digital/ (Contains digital pins)  
+|   |  + 'PIN NUMBER'/ (Contains control nodes of pin at 'PIN NUMBER')  
+|   |     + state (A file that contains the state of the pin. Read and Writeable.  when written ASCII text "1", the state should be set to HIGH and to LOW with "0".)  
+|   |     + pwm (A file that contains the PWM value of the pin if the pin is capable of it. Does not exist if the pin isn't PWM capable. Takes in a ASCII encoded decimal number as the duty cycle. Ex: "255")  
+|   |  
+|   + analog/ (contains analog pins)
+|      + 'PIN NUMBER'/ (Contains control nodes of pin at 'PIN NUMBER')  
+|         + reading (Contains analog reading of the pin. When read, it should provide a ASCII encoded text of the current reading in decimal. Ex: "1024")
+|         + ref (Contains reference voltage (in millivolts) in ASCII form. Ex: "5000")
+|         + writer (An optional file that writes to the DAC. Takes in ASCII encoded numbers as the input value. Ex: "512")  
+|  
++ power/ (Contains files related to power management)
+|   + sleep (Puts the MCU into sleep mode when written to, regardless of the data.)
+|  
++ config/ (Contains files that are configuration instead of directly being mapped to hardware.)
+|   + wssid (Contains the WiFi SSID the MCU connects to, Readable and Writeable.)
+|   + wpwd (Contains WiFi password. Cannot be read, only written.)
+|  
++ etc/ (Contains files that do not fit in these categories.)
+
+
 # EXAMPLE  
 Lets say a client wants to write "127" into the PWM node of a PWM capable-pin, 6. to achieve this, it would send this message:  
   
