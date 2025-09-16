@@ -5,9 +5,7 @@ However, MFS is not retricted to MCUs. It should be able to run on any hardware 
   
 # Protocol Specification  
   
-MFS operates in 2 diffirent modes, `setup`, and `normal`. They will be explained soon, but first the messages that MFS uses.  
-  
-psize[4], dsize[4], op[1] path[s], data[s]  
+psize[4], dsize[4], op[1] path[psize], data[dsize]  
   
 in MFS, all integers are little endian.  
 psize is an unsigned 32-bit integer that contains the size of the path.  
