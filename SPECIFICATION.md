@@ -66,23 +66,24 @@ Response echo back the file they operated on, for example a read operation's res
 |   + digital/ (Contains digital pins)  
 |   |  + 'PIN NUMBER'/ (Contains control nodes of pin at 'PIN NUMBER')  
 |   |     + state (A file that contains the state of the pin. Read and Writeable.  when written ASCII text "1", the state should be set to HIGH and to LOW with "0".)  
-|   |     + pwm (A file that contains the PWM value of the pin if the pin is capable of it. Does not exist if the pin isn't PWM capable. Takes in a ASCII encoded decimal number as the duty cycle. Ex: "255")  
+|   |     + pwm (A file that contains the PWM value of the pin if the pin is capable of it. Does not exist if the pin isn't PWM capable. Takes in a ASCII encoded decimal number as the duty cycle. File can be read to obtain current duty cycle. Ex: "255")  
 |   |  
 |   + analog/ (contains analog pins)
 |      + 'PIN NUMBER'/ (Contains control nodes of pin at 'PIN NUMBER')  
-|         + reading (Contains analog reading of the pin. When read, it should provide a ASCII encoded text of the current reading in decimal. Ex: "1024")
-|         + ref (Contains reference voltage (in millivolts) in ASCII form. Ex: "5000")
+|         + reading (Contains analog reading of the pin. When read, it should provide a ASCII encoded text of the current reading in decimal. Ex: "1024")  
+|         + ref (Contains reference voltage (in millivolts) in ASCII form. Ex: "5000")  
 |         + writer (An optional file that writes to the DAC. Takes in ASCII encoded numbers as the input value. Ex: "512")  
 |  
-+ power/ (Contains files related to power management)
-|   + sleep (Puts the MCU into sleep mode when written to, regardless of the data.)
++ power/ (Contains files related to power management)  
+|   + sleep (Puts the MCU into sleep mode when written to, regardless of the data.)  
 |  
-+ config/ (Contains files that are configuration instead of directly being mapped to hardware.)
-|   + wssid (Contains the WiFi SSID the MCU connects to, Readable and Writeable.)
-|   + wpwd (Contains WiFi password. Cannot be read, only written.)
++ config/ (Contains files that are configuration instead of directly being mapped to hardware.)  
+|   + wssid (Contains the WiFi SSID the MCU connects to, Readable and Writeable.)  
+|   + wpwd (Contains WiFi password. Cannot be read, only written.)  
 |  
-+ etc/ (Contains files that do not fit in these categories.)
++ etc/ (Contains files that do not fit in these categories.)  
 
+*As clarification, the file being optional means that the file may not exist*
 
 # EXAMPLE  
 Lets say a client wants to write "127" into the PWM node of a PWM capable-pin, 6. to achieve this, it would send this message:  
