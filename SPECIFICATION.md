@@ -55,6 +55,7 @@ values ranging from 3000 to 4999 are client errors:
   3000: Timed out.  
   3001: Connection refused.  
   3002: Server no longer serving this client. (Can be used whenever an implementation wants to block a client for some reason)  
+  3003: Operation not supported
   
 ## Responses  
 Responses are messages with the operand being ORed with 0x80.  
