@@ -39,6 +39,7 @@ values ranging from 0 to 999 are internal errors:
   0: Out of memory  
   1: Operation failed unexpectedly.  
   2: Request exceeded internal buffers.  
+  3: Unable to parse headers.
   
 values ranging from 1000 to 1999 are file errors:  
   1000: File not found  
