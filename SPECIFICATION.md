@@ -26,7 +26,7 @@ Unused operations within the MFS spec range are to be treated as a no-op.
 0: no operation. Self explanatory. Server responds with a no-op response aswell (0x80)  
 1: read. Reads data from the path provided by the message, When the server gets this it should send a message to the requester with data being the contents of the file at path.  
 2: write. Writes data of the message to the file at path, Response data should contain the bytes written as a unsigned 32-bit integer (much like dsize).  
-3: ls. sends the file paths the server has to the client, akin to POSIX ls. During response, the data field contains all the paths the server has, with '\0's between the paths.  
+3: ls. sends the file paths the server has to the client, akin to POSIX ls. During response, the data field contains all the paths the server has, with '\0's at the end of each path.  
 4: error. data field is the error code (codes are listed below). Normally, this shouldn't be sent out on its own (non-response), so more often than not, this will come as 0x84 
     
   
